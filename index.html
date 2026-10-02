@@ -1,113 +1,785 @@
- <!DOCTYPE html>
+
+       
+   <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaming Club</title>
 
-    <!-- Connect CSS -->
-    <link rel="stylesheet" href="style.css">
+    <title>🎮 Gaming Club - Games</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1020;
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            padding: 25px;
+            background: #111936;
+        }
+
+        header h1 {
+            color: #00e5ff;
+        }
+
+        nav {
+            padding: 15px;
+            background: #151e3d;
+        }
+
+        nav button {
+            margin: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #00e5ff;
+            color: #07101c;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: white;
+        }
+
+        .game {
+            display: none;
+            padding: 30px 10px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* =========================
+           SNAKE GAME
+           ========================= */
+
+        #snakeCanvas {
+            background: black;
+            border: 3px solid #00e5ff;
+            max-width: 90vw;
+        }
+
+        #snakeScore {
+            color: #00e5ff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           PUZZLE GAME
+           ========================= */
+
+        #puzzle {
+            width: 400px;
+            height: 400px;
+            max-width: 90vw;
+            max-height: 90vw;
+
+            margin: 25px auto;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 7px;
+        }
+
+        .tile {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #00e5ff;
+            color: #07101c;
+
+            font-size: 25px;
+            font-weight: bold;
+
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .tile:hover {
+            transform: scale(1.03);
+        }
+
+        .empty {
+            background: #151e3d;
+            cursor: default;
+        }
+
+        #puzzleMessage {
+            color: #00e5ff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 25px;
+            margin-top: 30px;
+            background: #070b17;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Navigation -->
-    <nav>
-        <h2>🎮 Gaming Club</h2>
+<header>
 
-        <a href="#home">Home</a>
-        <a href="#games">Games</a>
-        <a href="#tournaments">Tournaments</a>
-        <a href="#members">Members</a>
-    </nav>
+    <h1>🎮 Gaming Club</h1>
 
-    <!-- Home -->
-    <section id="home" class="hero">
-        <h1>🎮 Welcome to Gaming Club</h1>
+    <p>Choose a game and start playing!</p>
 
-        <p>
-            Play games, participate in tournaments,
-            and enjoy gaming with your friends!
-        </p>
+</header>
 
-        <a href="#games">
-            <button>Explore Games</button>
-        </a>
-    </section>
 
-    <!-- Games -->
-    <section id="games">
-        <h1>🕹️ Our Games</h1>
+<nav>
 
-        <div class="games">
+    <button onclick="showSnake()">
+        🐍 Snake Game
+    </button>
 
-            <div class="game-card">
-                <h2>🐍 Snake</h2>
-                <p>Play the classic Snake game.</p>
+    <button onclick="showPuzzle()">
+        🧩 Puzzle Game
+    </button>
 
-                <a href="snake.html">
-                    <button>Play Snake</button>
-                </a>
-            </div>
+</nav>
 
-            <div class="game-card">
-                <h2>❌⭕ Tic-Tac-Toe</h2>
-                <p>Challenge your friend.</p>
 
-                <button onclick="comingSoon()">
-                    Play Game
-                </button>
-            </div>
+<!-- =========================
+     SNAKE GAME
+     ========================= -->
 
-            <div class="game-card">
-                <h2>🏓 Pong</h2>
-                <p>Classic arcade game.</p>
+<section id="snakeGame" class="game active">
 
-                <button onclick="comingSoon()">
-                    Play Game
-                </button>
-            </div>
+    <h2>🐍 Snake Game</h2>
 
-        </div>
-    </section>
+    <p>Use the arrow keys to move the snake.</p>
 
-    <!-- Tournaments -->
-    <section id="tournaments">
-        <h1>🏆 Upcoming Tournaments</h1>
+    <p id="snakeScore">
+        Score: 0
+    </p>
 
-        <div class="tournament">
-            <h2>Gaming Championship</h2>
-            <p>📅 Date: Coming Soon</p>
-            <p>👥 Open for all club members</p>
+    <canvas
+        id="snakeCanvas"
+        width="400"
+        height="400">
+    </canvas>
 
-            <button onclick="joinTournament()">
-                Join Tournament
-            </button>
-        </div>
-    </section>
+    <br><br>
 
-    <!-- Members -->
-    <section id="members">
-        <h1>👥 Gaming Club</h1>
+    <button onclick="restartSnake()">
+        🔄 Restart Snake
+    </button>
 
-        <p>
-            Our club is a place where gamers can meet,
-            play games, participate in tournaments,
-            and have fun together.
-        </p>
+</section>
 
-        <button onclick="joinClub()">
-            Join Gaming Club
-        </button>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 Gaming Club | Made with ❤️ and 🎮</p>
-    </footer>
+<!-- =========================
+     PUZZLE GAME
+     ========================= -->
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+<section id="puzzleGame" class="game">
+
+    <h2>🧩 Puzzle Game</h2>
+
+    <p>
+        Arrange the numbers from 1 to 15.
+    </p>
+
+    <div id="puzzle"></div>
+
+    <p id="moves">
+        Moves: 0
+    </p>
+
+    <p id="puzzleMessage"></p>
+
+    <button onclick="newPuzzle()">
+        🔄 New Puzzle
+    </button>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 Gaming Club 🎮
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   GAME SWITCHING
+   ===================================================== */
+
+function showSnake() {
+
+    document.getElementById("snakeGame")
+        .classList.add("active");
+
+    document.getElementById("puzzleGame")
+        .classList.remove("active");
+
+}
+
+function showPuzzle() {
+
+    document.getElementById("puzzleGame")
+        .classList.add("active");
+
+    document.getElementById("snakeGame")
+        .classList.remove("active");
+
+}
+
+
+/* =====================================================
+   SNAKE GAME
+   ===================================================== */
+
+const canvas =
+    document.getElementById("snakeCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+const gridSize = 20;
+
+let snake;
+
+let food;
+
+let direction;
+
+let score;
+
+let snakeGame;
+
+
+/* Start Snake */
+
+function startSnake() {
+
+    snake = [
+        {
+            x: 200,
+            y: 200
+        }
+    ];
+
+    direction = "RIGHT";
+
+    score = 0;
+
+    createFood();
+
+    document.getElementById("snakeScore")
+        .textContent = "Score: 0";
+
+    clearInterval(snakeGame);
+
+    snakeGame =
+        setInterval(drawSnake, 120);
+}
+
+
+/* Create Food */
+
+function createFood() {
+
+    food = {
+
+        x:
+            Math.floor(
+                Math.random() * 20
+            ) * gridSize,
+
+        y:
+            Math.floor(
+                Math.random() * 20
+            ) * gridSize
+    };
+
+}
+
+
+/* Keyboard */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "ArrowUp" &&
+            direction !== "DOWN"
+        ) {
+
+            direction = "UP";
+
+        }
+
+        if (
+            event.key === "ArrowDown" &&
+            direction !== "UP"
+        ) {
+
+            direction = "DOWN";
+
+        }
+
+        if (
+            event.key === "ArrowLeft" &&
+            direction !== "RIGHT"
+        ) {
+
+            direction = "LEFT";
+
+        }
+
+        if (
+            event.key === "ArrowRight" &&
+            direction !== "LEFT"
+        ) {
+
+            direction = "RIGHT";
+
+        }
+
+    }
+);
+
+
+/* Draw Snake */
+
+function drawSnake() {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    let head = {
+
+        x: snake[0].x,
+
+        y: snake[0].y
+
+    };
+
+
+    if (direction === "UP")
+        head.y -= gridSize;
+
+    if (direction === "DOWN")
+        head.y += gridSize;
+
+    if (direction === "LEFT")
+        head.x -= gridSize;
+
+    if (direction === "RIGHT")
+        head.x += gridSize;
+
+
+    /* Wall collision */
+
+    if (
+        head.x < 0 ||
+        head.x >= canvas.width ||
+        head.y < 0 ||
+        head.y >= canvas.height
+    ) {
+
+        gameOverSnake();
+
+        return;
+
+    }
+
+
+    /* Body collision */
+
+    for (
+        let part of snake
+    ) {
+
+        if (
+            head.x === part.x &&
+            head.y === part.y
+        ) {
+
+            gameOverSnake();
+
+            return;
+
+        }
+
+    }
+
+
+    snake.unshift(head);
+
+
+    /* Food */
+
+    if (
+        head.x === food.x &&
+        head.y === food.y
+    ) {
+
+        score++;
+
+        document.getElementById(
+            "snakeScore"
+        ).textContent =
+            "Score: " + score;
+
+        createFood();
+
+    } else {
+
+        snake.pop();
+
+    }
+
+
+    /* Draw Snake */
+
+    ctx.fillStyle = "#00ff66";
+
+    snake.forEach(
+        function(part) {
+
+            ctx.fillRect(
+                part.x,
+                part.y,
+                gridSize - 2,
+                gridSize - 2
+            );
+
+        }
+    );
+
+
+    /* Draw Food */
+
+    ctx.fillStyle = "red";
+
+    ctx.fillRect(
+        food.x,
+        food.y,
+        gridSize - 2,
+        gridSize - 2
+    );
+
+}
+
+
+/* Game Over */
+
+function gameOverSnake() {
+
+    clearInterval(snakeGame);
+
+    alert(
+        "Game Over! Your score is " +
+        score
+    );
+
+}
+
+
+/* Restart */
+
+function restartSnake() {
+
+    startSnake();
+
+}
+
+
+/* =====================================================
+   PUZZLE GAME
+   ===================================================== */
+
+let tiles = [];
+
+let puzzleMoves = 0;
+
+
+/* Start Puzzle */
+
+function startPuzzle() {
+
+    tiles = [];
+
+    for (
+        let i = 1;
+        i <= 15;
+        i++
+    ) {
+
+        tiles.push(i);
+
+    }
+
+    tiles.push(0);
+
+    newPuzzle();
+
+}
+
+
+/* New Puzzle */
+
+function newPuzzle() {
+
+    if (tiles.length === 0) {
+
+        startPuzzle();
+
+        return;
+
+    }
+
+
+    for (
+        let i = 0;
+        i < 200;
+        i++
+    ) {
+
+        let empty =
+            tiles.indexOf(0);
+
+        let possible = [];
+
+
+        if (empty >= 4)
+            possible.push(empty - 4);
+
+        if (empty < 12)
+            possible.push(empty + 4);
+
+        if (empty % 4 !== 0)
+            possible.push(empty - 1);
+
+        if (empty % 4 !== 3)
+            possible.push(empty + 1);
+
+
+        let randomMove =
+            possible[
+                Math.floor(
+                    Math.random() *
+                    possible.length
+                )
+            ];
+
+
+        [
+            tiles[empty],
+            tiles[randomMove]
+        ] =
+        [
+            tiles[randomMove],
+            tiles[empty]
+        ];
+
+    }
+
+
+    puzzleMoves = 0;
+
+    document.getElementById(
+        "puzzleMessage"
+    ).textContent = "";
+
+    drawPuzzle();
+
+}
+
+
+/* Draw Puzzle */
+
+function drawPuzzle() {
+
+    const puzzle =
+        document.getElementById(
+            "puzzle"
+        );
+
+    puzzle.innerHTML = "";
+
+
+    tiles.forEach(
+        function(number, index) {
+
+            const tile =
+                document.createElement(
+                    "div"
+                );
+
+            tile.classList.add(
+                "tile"
+            );
+
+
+            if (number === 0) {
+
+                tile.classList.add(
+                    "empty"
+                );
+
+            } else {
+
+                tile.textContent =
+                    number;
+
+                tile.onclick =
+                    function() {
+
+                        moveTile(index);
+
+                    };
+
+            }
+
+
+            puzzle.appendChild(tile);
+
+        }
+    );
+
+
+    document.getElementById(
+        "moves"
+    ).textContent =
+        "Moves: " + puzzleMoves;
+
+}
+
+
+/* Move Puzzle Tile */
+
+function moveTile(index) {
+
+    let empty =
+        tiles.indexOf(0);
+
+    let valid = false;
+
+
+    if (index === empty - 4)
+        valid = true;
+
+    if (index === empty + 4)
+        valid = true;
+
+
+    if (
+        index === empty - 1 &&
+        Math.floor(index / 4) ===
+        Math.floor(empty / 4)
+    ) {
+
+        valid = true;
+
+    }
+
+
+    if (
+        index === empty + 1 &&
+        Math.floor(index / 4) ===
+        Math.floor(empty / 4)
+    ) {
+
+        valid = true;
+
+    }
+
+
+    if (valid) {
+
+        [
+            tiles[index],
+            tiles[empty]
+        ] =
+        [
+            tiles[empty],
+            tiles[index]
+        ];
+
+
+        puzzleMoves++;
+
+        drawPuzzle();
+
+        checkPuzzle();
+
+    }
+
+}
+
+
+/* Check Puzzle */
+
+function checkPuzzle() {
+
+    for (
+        let i = 0;
+        i < 15;
+        i++
+    ) {
+
+        if (
+            tiles[i] !== i + 1
+        ) {
+
+            return;
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "puzzleMessage"
+    ).textContent =
+        "🎉 Congratulations! Puzzle Solved!";
+
+}
+
+
+/* Start Both Games */
+
+startSnake();
+
+startPuzzle();
+
+</script>
 
 </body>
-</html>
+</html>             
+           
+
+    
