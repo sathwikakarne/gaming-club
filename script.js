@@ -1,56 +1,148 @@
-// Define the Gaming Club object
-const gamingClub = {
-    name: "Pixel Punchers",
-    maxMembers: 5,
-    members: ["ShadowSlayer", "PixelQueen", "TurboGamer"],
-    gamesAvailable: ["Valorant", "FIFA 26", "Tekken 8"],
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snake Game</title>
 
-    // Method to display club info
-    showInfo: function() {
-        const statusDiv = document.getElementById("club-status");
-        if (statusDiv) {
-            statusDiv.innerHTML = `<p>Club: <strong>${this.name}</strong> | Active Games: ${this.gamesAvailable.join(", ")}</p>`;
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            background: #222;
+            color: white;
         }
-    },
 
-    // Method to add a member
-    addMember: function(gamerTag) {
-        if (this.members.length < this.maxMembers) {
-            this.members.push(gamerTag);
-            this.updateMemberList();
-            return true;
-        } else {
-            alert("Club is full!");
-            return false;
+        canvas {
+            background: black;
+            border: 3px solid white;
         }
-    },
 
-    // Method to render members to the webpage
-    updateMemberList: function() {
-        const listEl = document.getElementById("memberList");
-        if (listEl) {
-            listEl.innerHTML = "";
-            this.members.forEach(member => {
-                const li = document.createElement("li");
-                li.textContent = member;
-                listEl.appendChild(li);
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🐍 Snake Game</h1>
+
+    <canvas id="game" width="400" height="400"></canvas>
+
+    <p>Score: <span id="score">0</span></p>
+
+    <button onclick="restartGame()">Restart</button>
+
+    <script>
+        const canvas = document.getElementById("game");
+        const ctx = canvas.getContext("2d");
+
+        const size = 20;
+        let snake;
+        let food;
+        let direction;
+        let score;
+        let game;
+
+        function startGame() {
+            snake = [{x: 200, y: 200}];
+            food = {
+                x: Math.floor(Math.random() * 20) * size,
+                y: Math.floor(Math.random() * 20) * size
+            };
+
+            direction = "RIGHT";
+            score = 0;
+
+            document.getElementById("score").textContent = score;
+
+            clearInterval(game);
+            game = setInterval(drawGame, 120);
+        }
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "ArrowUp" && direction !== "DOWN")
+                direction = "UP";
+
+            if (event.key === "ArrowDown" && direction !== "UP")
+                direction = "DOWN";
+
+            if (event.key === "ArrowLeft" && direction !== "RIGHT")
+                direction = "LEFT";
+
+            if (event.key === "ArrowRight" && direction !== "LEFT")
+                direction = "RIGHT";
+        });
+
+        function drawGame() {
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            let head = {
+                x: snake[0].x,
+                y: snake[0].y
+            };
+
+            if (direction === "UP") head.y -= size;
+            if (direction === "DOWN") head.y += size;
+            if (direction === "LEFT") head.x -= size;
+            if (direction === "RIGHT") head.x += size;
+
+            // Game over
+            if (
+                head.x < 0 ||
+                head.x >= canvas.width ||
+                head.y < 0 ||
+                head.y >= canvas.height
+            ) {
+                endGame();
+                return;
+            }
+
+            snake.unshift(head);
+
+            // Eat food
+            if (head.x === food.x && head.y === food.y) {
+
+                score++;
+                document.getElementById("score").textContent = score;
+
+                food = {
+                    x: Math.floor(Math.random() * 20) * size,
+                    y: Math.floor(Math.random() * 20) * size
+                };
+
+            } else {
+                snake.pop();
+            }
+
+            // Draw snake
+            ctx.fillStyle = "lime";
+
+            snake.forEach(function(part) {
+                ctx.fillRect(part.x, part.y, size - 2, size - 2);
             });
+
+            // Draw food
+            ctx.fillStyle = "red";
+            ctx.fillRect(food.x, food.y, size - 2, size - 2);
         }
-    }
-};
 
-// Helper function for the HTML button
-function addMemberFromInput() {
-    const inputEl = document.getElementById("memberName");
-    const name = inputEl.value.trim();
-    if (name) {
-        gamingClub.addMember(name);
-        inputEl.value = "";
-    }
-}
+        function endGame() {
+            clearInterval(game);
+            alert("Game Over! Your score: " + score);
+        }
 
-// Initialize the page on load
-window.onload = function() {
-    gamingClub.showInfo();
-    gamingClub.updateMemberList();
-};
+        function restartGame() {
+            startGame();
+        }
+
+        startGame();
+    </script>
+
+</body>
+</html>
+        
+    
