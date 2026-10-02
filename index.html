@@ -1,0 +1,113 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Club</title>
+
+    <!-- Connect CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <h2>🎮 Gaming Club</h2>
+
+        <a href="#home">Home</a>
+        <a href="#games">Games</a>
+        <a href="#tournaments">Tournaments</a>
+        <a href="#members">Members</a>
+    </nav>
+
+    <!-- Home -->
+    <section id="home" class="hero">
+        <h1>🎮 Welcome to Gaming Club</h1>
+
+        <p>
+            Play games, participate in tournaments,
+            and enjoy gaming with your friends!
+        </p>
+
+        <a href="#games">
+            <button>Explore Games</button>
+        </a>
+    </section>
+
+    <!-- Games -->
+    <section id="games">
+        <h1>🕹️ Our Games</h1>
+
+        <div class="games">
+
+            <div class="game-card">
+                <h2>🐍 Snake</h2>
+                <p>Play the classic Snake game.</p>
+
+                <a href="snake.html">
+                    <button>Play Snake</button>
+                </a>
+            </div>
+
+            <div class="game-card">
+                <h2>❌⭕ Tic-Tac-Toe</h2>
+                <p>Challenge your friend.</p>
+
+                <button onclick="comingSoon()">
+                    Play Game
+                </button>
+            </div>
+
+            <div class="game-card">
+                <h2>🏓 Pong</h2>
+                <p>Classic arcade game.</p>
+
+                <button onclick="comingSoon()">
+                    Play Game
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Tournaments -->
+    <section id="tournaments">
+        <h1>🏆 Upcoming Tournaments</h1>
+
+        <div class="tournament">
+            <h2>Gaming Championship</h2>
+            <p>📅 Date: Coming Soon</p>
+            <p>👥 Open for all club members</p>
+
+            <button onclick="joinTournament()">
+                Join Tournament
+            </button>
+        </div>
+    </section>
+
+    <!-- Members -->
+    <section id="members">
+        <h1>👥 Gaming Club</h1>
+
+        <p>
+            Our club is a place where gamers can meet,
+            play games, participate in tournaments,
+            and have fun together.
+        </p>
+
+        <button onclick="joinClub()">
+            Join Gaming Club
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Gaming Club | Made with ❤️ and 🎮</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
