@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple Jigsaw Puzzle</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #f0f0f0;
+    }
+    #puzzle-container {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+        gap: 2px;
+        margin: 20px auto;
+        width: max-content;
+        background: #ccc;
+        padding: 5px;
+    }
+    .tile {
+        width: 100px;
+        height: 100px;
+        background-image: url('https://picsum.photos/300'); /* Random image */
+        background-size: 300px 300px;
+        border: 1px solid #999;
+        cursor: grab;
+    }
+    .empty {
+        background: #eee;
+        border: 1px dashed #aaa;
+    }
+</style>
+</head>
+<body>
+
+<h1>Jigsaw Puzzle</h1>
+<p>Drag and drop the tiles to complete the picture.</p>
+
+<div id="puzzle-container"></div>
+<p id="status"></p>
+
+<script>
+(function() {
+    const container = document.getElementById('puzzle-container');
+    const status = document.getElementById('status');
+    const size = 3; // 3x3 puzzle
+    let positions = [];
+
+    // Create tile positions
+    for (let row = 0; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+            positions.push({row, col});
+        }
+    }
+
+    // Shuffle positions
+    positions = positions.sort(() => Math.random() - 0.5);
+
+    // Create tiles
+    positions.forEach((pos, index) => {
+        const tile = document.createElement('div');
+        tile.classList.add('tile');
+        tile.draggable = true;
+        tile.dataset.correctRow = Math.floor(index / size);
+        tile.dataset.correctCol = index % size;
+        tile.style.backgroundPosition = `-${pos.col * 100}px -${pos.row * 100}px`;
+
+        // Drag events
+        tile.addEventListener('dragstart', dragStart);
+        tile.addEventListener('dragover', dragOver);
+        tile.addEventListener('drop', drop);
+
+        container.appendChild(tile);
+    });
+
+    let draggedTile = null;
+
+    function dragStart(e) {
+        draggedTile = this;
+        e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function dragOver(e) {
+        e.preventDefault();
+    }
+
+    function drop(e) {
+        e.preventDefault();
+        if (draggedTile && draggedTile !== this) {
+            // Swap background positions
+            const tempPos = this.style.backgroundPosition;
+            this.style.backgroundPosition = draggedTile.style.backgroundPosition;
+            draggedTile.style.backgroundPosition = tempPos;
+
+            checkWin();
+        }
+    }
+
+    function checkWin() {
+        const tiles = container.querySelectorAll('.tile');
+        let correctCount = 0;
+        tiles.forEach((tile, index) => {
+            const correctRow = Math.floor(index / size);
+            const correctCol = index % size;
+            const expectedPos = `-${correctCol * 100}px -${correctRow * 100}px`;
+            if (tile.style.backgroundPosition === expectedPos) {
+                correctCount++;
+            }
+        });
+        if (correctCount === size * size) {
+            status.textContent = "🎉 Puzzle Completed!";
+        }
+    }
+})();
+</script>
+
+</body>
+</html>
