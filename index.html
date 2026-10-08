@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <title>Snake & Jigsaw Puzzle Combo</title>
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         font-family: Arial, sans-serif;
         text-align: center;
@@ -11,17 +15,34 @@
         margin: 0;
         padding: 0;
     }
-    h1 { margin-top: 10px; }
+
+    h1 {
+        margin: 30px 0 20px;
+        font-size: 2.5rem;
+        font-weight: 800;
+    }
+
+    .button-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 18px;
+        margin: 0 auto 20px;
+        flex-wrap: wrap;
+    }
+
     .game-container {
         display: none;
         margin: 20px auto;
     }
+
     canvas {
         background: #000;
         display: block;
         margin: auto;
         border: 2px solid #333;
     }
+
     #puzzle {
         display: grid;
         grid-template-columns: repeat(3, 100px);
@@ -29,6 +50,7 @@
         gap: 2px;
         margin: auto;
     }
+
     .piece {
         width: 100px;
         height: 100px;
@@ -36,17 +58,28 @@
         cursor: pointer;
         border: 1px solid #ccc;
     }
+
     button {
-        margin: 5px;
-        padding: 10px 20px;
+        margin: 0;
+        padding: 12px 28px;
         font-size: 16px;
+        border: 1px solid #bdbdbd;
+        border-radius: 8px;
+        background: #f3f3f3;
+        color: #1a1a1a;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    button:hover {
+        background: #e8e8e8;
     }
 </style>
 </head>
 <body>
 
 <h1>Snake & Jigsaw Puzzle Game</h1>
-<div>
+<div class="button-row">
     <button onclick="showGame('snake')">Play Snake</button>
     <button onclick="showGame('puzzle')">Play Puzzle</button>
 </div>
